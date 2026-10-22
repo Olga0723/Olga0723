@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Check, Sparkles, UserCheck } from 'lucide-react';
 import { AVATAR_OPTIONS, AvatarOption } from '../data/avatarsData';
 import { playSound } from '../utils/audio';
+import { useLanguage } from '../context/LanguageContext';
 
 interface AvatarSelectorProps {
   selectedAvatar: string;
@@ -14,6 +15,7 @@ export const AvatarSelector: React.FC<AvatarSelectorProps> = ({
   onSelect,
   showTitle = true 
 }) => {
+  const { t } = useLanguage();
   const [filter, setFilter] = useState<'all' | 'female' | 'male'>('all');
 
   const filtered = AVATAR_OPTIONS.filter((a) => {
@@ -28,10 +30,10 @@ export const AvatarSelector: React.FC<AvatarSelectorProps> = ({
           <div>
             <label className="flex items-center gap-1.5 text-xs font-bold text-slate-800 dark:text-slate-200">
               <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-              <span>Selecciona tu Avatar 3D de Aprendiz</span>
+              <span>{t('chooseAvatar3D')}</span>
             </label>
             <p className="text-[11px] text-slate-500 dark:text-slate-400">
-              Elige el personaje femenino o masculino que te representará en la inducción.
+              {t('chooseAvatarSubtitle')}
             </p>
           </div>
 
@@ -49,7 +51,7 @@ export const AvatarSelector: React.FC<AvatarSelectorProps> = ({
                   : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'
               }`}
             >
-              Todos (6)
+              {t('allAvatars')} (6)
             </button>
             <button
               type="button"
@@ -63,7 +65,7 @@ export const AvatarSelector: React.FC<AvatarSelectorProps> = ({
                   : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'
               }`}
             >
-              Femeninos (3)
+              {t('femaleAvatars')} (3)
             </button>
             <button
               type="button"
@@ -77,7 +79,7 @@ export const AvatarSelector: React.FC<AvatarSelectorProps> = ({
                   : 'text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'
               }`}
             >
-              Masculinos (3)
+              {t('maleAvatars')} (3)
             </button>
           </div>
         </div>

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { X, ExternalLink, Play, AlertCircle, RefreshCw, Copy, Check, Video, ShieldCheck } from 'lucide-react';
+import { X, ExternalLink, Play, AlertCircle, RefreshCw, Copy, Check, Video, LogOut } from 'lucide-react';
 import { playSound } from '../utils/audio';
+import { useLanguage } from '../context/LanguageContext';
 
 interface VideoModalProps {
   isOpen: boolean;
   onClose: () => void;
   videoUrl: string;
-  title: string;
+  title?: string;
 }
 
 function extractGoogleFileId(url: string): string | null {
@@ -18,6 +19,7 @@ function extractGoogleFileId(url: string): string | null {
 }
 
 export const VideoModal: React.FC<VideoModalProps> = ({ isOpen, onClose, videoUrl, title }) => {
+  const { t } = useLanguage();
   const [embedMode, setEmbedMode] = useState<'drive' | 'vids'>('drive');
   const [copied, setCopied] = useState(false);
 
@@ -36,6 +38,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({ isOpen, onClose, videoUr
 
   if (!isOpen) return null;
 
+  const modalTitle = title || t('videoModalTitle');
   const fileId = extractGoogleFileId(videoUrl) || '1tOtNxcS44TKjW5mn0gy_vyeQnClCEVZ6nnfVa_Vt5Og';
 
   // Construct embed URLs
@@ -76,13 +79,13 @@ export const VideoModal: React.FC<VideoModalProps> = ({ isOpen, onClose, videoUr
             </div>
             <div>
               <h4 className="font-bold text-sm text-white leading-tight flex items-center gap-2">
-                <span>{title}</span>
+                <span>{modalTitle}</span>
                 <span className="hidden sm:inline-flex text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
-                  Inducción SENA 2026
+                  SENA 2026
                 </span>
               </h4>
               <p className="text-[11px] text-slate-300">
-                Paso a paso para realizar tu inducción y expedir tu certificado oficial
+                {t('videoModalSubtitle')}
               </p>
             </div>
           </div>
@@ -96,18 +99,20 @@ export const VideoModal: React.FC<VideoModalProps> = ({ isOpen, onClose, videoUr
               title="Abrir video directamente en Google Drive / Google Vids"
             >
               <ExternalLink className="w-3.5 h-3.5" />
-              <span>Abrir en Google Drive</span>
+              <span className="hidden sm:inline">{t('openInDrive')}</span>
             </a>
 
+            {/* Prominent Exit Video Button */}
             <button
               onClick={() => {
                 playSound('click');
                 onClose();
               }}
-              className="p-1.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
-              title="Cerrar ventana (Esc)"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold transition-all shadow-xs active:scale-95 cursor-pointer border border-rose-400/30"
+              title={`${t('exitVideo')} (Esc)`}
             >
-              <X className="w-5 h-5" />
+              <LogOut className="w-3.5 h-3.5" />
+              <span>{t('exitVideo')}</span>
             </button>
           </div>
         </div>
@@ -118,7 +123,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({ isOpen, onClose, videoUr
             key={activeEmbedUrl}
             className="w-full h-full border-0 absolute inset-0 z-0"
             src={activeEmbedUrl}
-            title={title}
+            title={modalTitle}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
             allowFullScreen
           />
@@ -129,7 +134,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({ isOpen, onClose, videoUr
           <div className="flex items-start sm:items-center gap-2 text-slate-600 dark:text-slate-300">
             <AlertCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5 sm:mt-0" />
             <span className="text-[11px] sm:text-xs">
-              <strong>¿No se reproduce en el visor?</strong> Google Drive puede restringir reproductores integrados. Usa el botón verde para abrirlo en Google Drive sin bloqueos.
+              {t('videoTroubleshoot')}
             </span>
           </div>
 
@@ -144,7 +149,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({ isOpen, onClose, videoUr
               title="Alternar entre modo Google Drive y Google Vids"
             >
               <RefreshCw className="w-3.5 h-3.5" />
-              <span>Formato: {embedMode === 'drive' ? 'Drive' : 'Vids'}</span>
+              <span>{t('formatToggle')}: {embedMode === 'drive' ? 'Drive' : 'Vids'}</span>
             </button>
 
             <button
@@ -154,7 +159,7 @@ export const VideoModal: React.FC<VideoModalProps> = ({ isOpen, onClose, videoUr
               title="Copiar enlace directo del tutorial"
             >
               {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
-              <span>{copied ? '¡Copiado!' : 'Copiar Enlace'}</span>
+              <span>{copied ? t('copiedLink') : t('copyLink')}</span>
             </button>
 
             <a
@@ -164,8 +169,21 @@ export const VideoModal: React.FC<VideoModalProps> = ({ isOpen, onClose, videoUr
               className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl bg-[#00324D] hover:bg-[#014063] dark:bg-emerald-600 dark:hover:bg-emerald-500 text-white text-xs font-bold shadow-xs transition-transform active:scale-95 cursor-pointer"
             >
               <Play className="w-3.5 h-3.5 fill-current" />
-              <span>Ver en Pestaña Nueva</span>
+              <span>{t('openInNewTab')}</span>
             </a>
+
+            {/* Prominent Bottom Exit Button */}
+            <button
+              type="button"
+              onClick={() => {
+                playSound('click');
+                onClose();
+              }}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-rose-100 hover:bg-rose-200 dark:bg-rose-950/70 dark:hover:bg-rose-900 text-rose-800 dark:text-rose-200 text-xs font-bold transition-colors cursor-pointer border border-rose-300 dark:border-rose-800"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span>{t('closeVideo')}</span>
+            </button>
           </div>
         </div>
       </div>

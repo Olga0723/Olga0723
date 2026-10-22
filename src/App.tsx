@@ -55,6 +55,7 @@ import {
 } from './services/autoSyncService';
 import { SenaLogo } from './components/SenaLogo';
 import { ToastProvider, useToast } from './context/ToastContext';
+import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { GamificationToastContainer } from './components/GamificationToast';
 
 import { 
@@ -90,6 +91,7 @@ import { playSound } from './utils/audio';
 
 function AppContent() {
   const { notifyModuleCompleted, notifyBadgeUnlocked, notifyExamPassed, notifySuccess } = useToast();
+  const { t, language } = useLanguage();
 
   const [profile, setProfile] = useState<ApprenticeProfile>(INITIAL_APPRENTICE);
   const [cohort, setCohort] = useState<CohortStudent[]>(MOCK_COHORT_STUDENTS);
@@ -530,8 +532,7 @@ function AppContent() {
             <div className="flex items-center gap-2">
               <Eye className="w-4 h-4 text-slate-950 shrink-0" />
               <span>
-                <strong>Modo Previsualización:</strong> Estás viendo la inducción exactamente como la ve el aprendiz.
-                Los aprendices no tienen acceso a Google Drive ni al panel administrativo.
+                <strong>{t('previewNotice')}</strong> {t('previewWarning')}
               </span>
             </div>
             <div className="flex items-center gap-2 shrink-0">
@@ -540,13 +541,13 @@ function AppContent() {
                 className="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/40 hover:bg-white/60 text-slate-950 text-xs font-bold transition-colors cursor-pointer"
               >
                 <Share2 className="w-3.5 h-3.5" />
-                <span>Compartir Enlace</span>
+                <span>{t('shareLink')}</span>
               </button>
               <button
                 onClick={() => setCurrentView('instructor')}
                 className="px-3.5 py-1 rounded-lg bg-slate-950 hover:bg-slate-800 text-white text-xs font-bold transition-colors cursor-pointer shadow-xs"
               >
-                Volver a Panel Instructora
+                {t('backToInstructor')}
               </button>
             </div>
           </div>
@@ -593,7 +594,7 @@ function AppContent() {
               <div className="relative z-10 max-w-2xl">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="px-3 py-1 rounded-full bg-[#39A900] text-white font-bold text-xs uppercase tracking-wider shadow-xs">
-                    Inducción SENA 2026
+                    {t('induction2026')}
                   </span>
                   <span className="text-xs text-emerald-300 font-medium">
                     Acuerdo 002 de 2026
@@ -601,11 +602,11 @@ function AppContent() {
                 </div>
 
                 <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight font-heading leading-tight">
-                  ¡Bienvenido, {profile.fullName.split(' ')[0]}!
+                  {t('welcomeApprentice')}, {profile.fullName.split(' ')[0]}!
                 </h2>
 
                 <p className="text-xs sm:text-sm text-slate-200 dark:text-slate-300 mt-2 leading-relaxed">
-                  Estás a punto de iniciar tu formación en <strong>{profile.programName}</strong>.
+                  {t('heroDescription')} <strong>{profile.programName}</strong>.
                   Domina tus <strong>Derechos</strong>, cumple tus <strong>Deberes</strong>, evita las <strong>Prohibiciones</strong> y obtén tu <strong>Certificado Oficial de Inducción</strong> superando las dinámicas gamificadas.
                 </p>
 
@@ -619,7 +620,7 @@ function AppContent() {
                     className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-600 hover:to-yellow-600 text-slate-950 font-bold text-xs sm:text-sm shadow-md transition-all active:scale-95 cursor-pointer"
                   >
                     <Zap className="w-4 h-4 fill-current text-slate-950" />
-                    <span>Jugar Clasificador Veloz (+XP)</span>
+                    <span>{t('playClassifier')}</span>
                   </button>
 
                   {isCertified ? (
@@ -631,7 +632,7 @@ function AppContent() {
                       className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#39A900] hover:bg-[#329400] text-white font-bold text-xs sm:text-sm shadow-md transition-all active:scale-95 cursor-pointer"
                     >
                       <Award className="w-4 h-4" />
-                      <span>Ver Certificado Oficial (Aprobado)</span>
+                      <span>{t('viewCertificate')}</span>
                     </button>
                   ) : (
                     <button
@@ -642,7 +643,7 @@ function AppContent() {
                       className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/25 text-white font-bold text-xs sm:text-sm shadow-xs transition-all active:scale-95 cursor-pointer"
                     >
                       <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                      <span>Evaluación Final de Inducción</span>
+                      <span>{t('finalExam')}</span>
                     </button>
                   )}
 
@@ -654,7 +655,7 @@ function AppContent() {
                     className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-black/20 hover:bg-black/30 dark:bg-white/10 dark:hover:bg-white/15 text-slate-200 text-xs sm:text-sm transition-colors cursor-pointer"
                   >
                     <BookOpen className="w-4 h-4" />
-                    <span>Consultar Reglamento</span>
+                    <span>{t('consultRegulations')}</span>
                   </button>
 
                   <button
@@ -666,7 +667,7 @@ function AppContent() {
                     title="Ver video tutorial explicativo de la inducción"
                   >
                     <Play className="w-4 h-4 fill-current text-emerald-300" />
-                    <span>Tutorial en Video</span>
+                    <span>{t('videoTutorialBtn')}</span>
                   </button>
                 </div>
               </div>
@@ -684,7 +685,7 @@ function AppContent() {
                 </div>
                 <div className="text-xs">
                   <div className="text-slate-500 dark:text-slate-400">
-                    Datos del Aprendiz para el Certificado Oficial:
+                    {t('apprenticeDataTitle')}
                   </div>
                   <div className="font-bold text-slate-900 dark:text-white text-sm">
                     {profile.fullName} • <span className="font-mono text-xs">{profile.documentType} {profile.documentNumber}</span>
@@ -702,7 +703,7 @@ function AppContent() {
                 className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold text-xs transition-colors cursor-pointer shrink-0 border border-slate-200 dark:border-slate-700"
               >
                 <UserCheck className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                <span>Personalizar Mi Nombre y Cédula</span>
+                <span>{t('customizeProfileBtn')}</span>
               </button>
             </div>
 
@@ -720,10 +721,10 @@ function AppContent() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
                 <div>
                   <h3 className="text-xl font-bold text-slate-900 dark:text-white font-heading">
-                    Módulos Formativos del Reglamento
+                    {t('modulesSectionTitle')}
                   </h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400">
-                    Estudia cada capítulo del Acuerdo 002 de 2026, analiza los casos cotidianos y completa los desafíos.
+                    {t('modulesSectionSubtitle')}
                   </p>
                 </div>
 
@@ -954,8 +955,10 @@ function AppContent() {
 
 export default function App() {
   return (
-    <ToastProvider>
-      <AppContent />
-    </ToastProvider>
+    <LanguageProvider>
+      <ToastProvider>
+        <AppContent />
+      </ToastProvider>
+    </LanguageProvider>
   );
 }
