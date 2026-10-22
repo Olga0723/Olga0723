@@ -1,0 +1,6 @@
+{
+  "name": "SENA Inducción Gamificada - Reglamento del Aprendiz",
+  "description": "Plataforma interactiva y gamificada de inducción para aprendices del SENA: Derechos, Deberes, Prohibiciones y Evaluación con Certificado (Acuerdo 002 de 2026 del Consejo Directivo Nacional).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

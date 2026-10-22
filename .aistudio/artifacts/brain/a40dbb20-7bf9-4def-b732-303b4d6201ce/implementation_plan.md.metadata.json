@@ -1,0 +1,6 @@
+{
+  "summary":  "Plan estructurado de sincronización automática permanente para el prototipo de inducción SENA (Acuerdo 002 de 2026). Detalla la eliminación de dependencias de popups OAuth y errores de permisos 403, implementando un motor en segundo plano que sincroniza automáticamente las calificaciones y estado de los aprendices al aprobar la evaluación y certificarse, con respaldo en cola local sin intervención manual continua.",
+  "updatedAt":  "2026-10-21T15:49:18.712651499Z",
+  "requestFeedback":  true,
+  "userFacing":  true
+}
