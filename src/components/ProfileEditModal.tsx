@@ -16,6 +16,7 @@ export const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
   onSave,
   onClose,
 }) => {
+  const { t } = useLanguage();
   const [fullName, setFullName] = useState(profile.fullName);
   const [documentType, setDocumentType] = useState<DocumentType>(profile.documentType);
   const [documentNumber, setDocumentNumber] = useState(profile.documentNumber);
@@ -66,13 +67,13 @@ export const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
             </div>
             <div>
               <h3 className="text-base font-bold flex items-center gap-2">
-                <span>Datos del Aprendiz</span>
+                <span>{t('apprenticeDataModalTitle')}</span>
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#39A900] text-white">
-                  Avatar 3D
+                  {t('avatar3D')}
                 </span>
               </h3>
               <p className="text-xs text-slate-300">
-                Esta información figurará en el Certificado Oficial de Inducción
+                {t('apprenticeDataModalSubtitle')}
               </p>
             </div>
           </div>
@@ -90,7 +91,7 @@ export const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
         <form onSubmit={handleSubmit} className="p-6 space-y-4 text-xs sm:text-sm">
           <div>
             <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
-              Nombre Completo del Aprendiz
+              {t('fullNameLabel')}
             </label>
             <input
               type="text"
@@ -98,13 +99,13 @@ export const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
               value={fullName}
               onChange={(e) => setFullName(e.target.value)}
               className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#39A900]"
-              placeholder="Ej: Carlos Andrés Rodríguez Patiño"
+              placeholder={t('namePlaceholder')}
             />
           </div>
 
           <div className="grid grid-cols-3 gap-3">
             <div>
-              <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">Tipo Doc.</label>
+              <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">{t('docTypeLabel')}</label>
               <select
                 value={documentType}
                 onChange={(e) => setDocumentType(e.target.value as DocumentType)}
@@ -120,7 +121,7 @@ export const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
 
             <div className="col-span-2">
               <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
-                Número de Documento
+                {t('docNumberLabel')}
               </label>
               <input
                 type="text"
@@ -128,14 +129,14 @@ export const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
                 value={documentNumber}
                 onChange={(e) => setDocumentNumber(e.target.value)}
                 className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#39A900]"
-                placeholder="1024567890"
+                placeholder={t('docPlaceholder')}
               />
             </div>
           </div>
 
           <div>
             <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
-              Programa de Formación
+              {t('programLabel')}
             </label>
             <input
               type="text"
@@ -144,7 +145,7 @@ export const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
               value={programName}
               onChange={(e) => setProgramName(e.target.value)}
               className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:outline-hidden focus:ring-2 focus:ring-[#39A900]"
-              placeholder="Selecciona o escribe el programa"
+              placeholder={t('selectOrWriteProgram')}
             />
             <datalist id="programs-list">
               {samplePrograms.map((p, i) => (
@@ -156,7 +157,7 @@ export const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
-                Número de Ficha
+                {t('fichaLabel')}
               </label>
               <input
                 type="text"
@@ -169,7 +170,7 @@ export const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
             </div>
 
             <div>
-              <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">Regional</label>
+              <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">{t('regionalLabel')}</label>
               <input
                 type="text"
                 required
@@ -183,7 +184,7 @@ export const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
 
           <div>
             <label className="block font-bold text-slate-700 dark:text-slate-300 mb-1">
-              Centro de Formación
+              {t('trainingCenterLabel')}
             </label>
             <input
               type="text"
@@ -203,14 +204,14 @@ export const ProfileEditModal: React.FC<ProfileEditModalProps> = ({
               onClick={onClose}
               className="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold text-slate-600 dark:text-slate-300 text-xs cursor-pointer"
             >
-              Cancelar
+              {t('cancel')}
             </button>
             <button
               type="submit"
               className="flex items-center gap-1.5 px-6 py-2.5 rounded-xl bg-[#39A900] hover:bg-[#329400] text-white font-bold text-xs sm:text-sm shadow-md transition-all active:scale-95 cursor-pointer"
             >
               <Save className="w-4 h-4" />
-              <span>Guardar Cambios</span>
+              <span>{t('saveChanges')}</span>
             </button>
           </div>
         </form>

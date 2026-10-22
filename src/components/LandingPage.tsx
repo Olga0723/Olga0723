@@ -101,11 +101,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       onSelectInstructor();
     } else {
       playSound('wrong');
-      setPasswordError(
-        language === 'es'
-          ? 'Clave incorrecta. Recuerda que la clave de acceso de instructora es: Sena1234'
-          : 'Incorrect password. Remember instructor access password is: Sena1234'
-      );
+      setPasswordError(t('passwordIncorrect'));
     }
   };
 
@@ -141,7 +137,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
     onSelectApprentice(updatedProfile);
   };
 
-  const samplePrograms = [
+  const samplePrograms = language === 'es' ? [
     'Tecnología en Análisis y Desarrollo de Software (ADSO)',
     'Tecnología en Gestión de Redes de Datos',
     'Técnico en Contabilización de Operaciones Comerciales y Financieras',
@@ -149,6 +145,14 @@ export const LandingPage: React.FC<LandingPageProps> = ({
     'Técnico en Sistemas e Informática',
     'Tecnología en Control y Automatización Industrial',
     'Técnico en Servicios de Barismo y Mesa',
+  ] : [
+    'Technology in Software Analysis and Development (ADSO)',
+    'Technology in Data Network Management',
+    'Technician in Commercial and Financial Operations Accounting',
+    'Technology in Business Management',
+    'Technician in Systems and Computing',
+    'Technology in Industrial Control and Automation',
+    'Technician in Barista and Table Service',
   ];
 
   return (
@@ -283,7 +287,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                   {t('requiresPassword')}
                 </span>
                 <span className="text-xs text-amber-200 font-semibold">
-                  Ficha 2824190
+                  {t('cohortBadge')}
                 </span>
               </div>
               <div className="flex items-center gap-3.5">
@@ -306,19 +310,19 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               <ul className="space-y-2.5 text-xs text-slate-600 dark:text-slate-300">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-                  <span>Sincronización automática a <strong>Google Sheets y Google Drive</strong>.</span>
+                  <span>{t('instructorFeature1')}</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-                  <span>Monitoreo del avance de los aprendices y notas del examen.</span>
+                  <span>{t('instructorFeature2')}</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-                  <span>Centro de convocatoria con enlace y código QR para aprendices.</span>
+                  <span>{t('instructorFeature3')}</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
-                  <span>Descarga de reportes completos en <strong>CSV y TSV</strong>.</span>
+                  <span>{t('instructorFeature4')}</span>
                 </li>
               </ul>
 
@@ -353,7 +357,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                           setInstructorPassword(e.target.value);
                           if (passwordError) setPasswordError('');
                         }}
-                        placeholder="Escribe: Sena1234"
+                        placeholder={t('passwordPlaceholder')}
                         className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-hidden focus:ring-2 focus:ring-amber-500 font-mono"
                       />
                       <button
@@ -487,7 +491,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                       autoFocus
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      placeholder="Ej: Carlos Andrés Rodríguez Patiño"
+                      placeholder={t('namePlaceholder')}
                       className="w-full px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-hidden focus:ring-2 focus:ring-[#39A900]"
                     />
                   </div>
@@ -518,7 +522,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                         required
                         value={documentNumber}
                         onChange={(e) => setDocumentNumber(e.target.value)}
-                        placeholder="Ej: 1024567890"
+                        placeholder={t('docPlaceholder')}
                         className="w-full px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-hidden focus:ring-2 focus:ring-[#39A900] font-mono"
                       />
                     </div>
@@ -561,7 +565,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                       value={programName}
                       onChange={(e) => setProgramName(e.target.value)}
                       list="program-options"
-                      placeholder="Ej: Tecnología en Análisis y Desarrollo de Software"
+                      placeholder={t('programPlaceholder')}
                       className="w-full px-3.5 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-xs focus:outline-hidden focus:ring-2 focus:ring-[#39A900]"
                     />
                     <datalist id="program-options">
